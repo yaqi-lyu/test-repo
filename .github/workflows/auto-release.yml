@@ -1,5 +1,6 @@
 name: Automated Electron App Release
-run-name: "YakShaver App Release - Build #${{ github.run_number }}"
+run-name: >-
+  YakShaver Build #${{ github.run_number }} 
 
 on:
   push:
@@ -10,6 +11,7 @@ permissions:
   actions: write
   contents: write
   pull-requests: write
+  actions: write
 
 env:
   NODE_VERSION: 20
@@ -65,6 +67,18 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
+
+      - name: Update Display Name
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 1. 获取第一行消息
+          MSG=$(echo "${{ github.event.head_commit.message }}" | head -n 1)
+          # 2. 如果是 PR 合并，去掉末尾的 (#123)
+          CLEAN_TITLE=$(echo "$MSG" | sed 's/ (#.*//')
+          # 3. 调用 GitHub API 修改当前运行的显示标题
+          gh api -X PATCH /repos/${{ github.repository }}/actions/runs/${{ github.run_id }} \
+            -f "display_title=🚀 Build #${{ github.run_number }}: $CLEAN_TITLE"
 
       - name: Generate version
         id: get_version
