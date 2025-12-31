@@ -8,6 +8,7 @@ on:
       - main
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
   actions: write
@@ -28,6 +29,39 @@ jobs:
           ref: main
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set run name to PR title
+        id: set_run_name
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Try to extract PR number from squash-merge commit message
+          PR_NUMBER=$(git log -1 --pretty=%B | head -1 | grep -oE '\(#[0-9]+\)' | grep -oE '[0-9]+' || echo "")
+
+          # Fallback: use gh to find PR by commit SHA
+          if [ -z "$PR_NUMBER" ]; then
+            PR_NUMBER=$(gh pr list --search "${{ github.sha }}" --state merged --json number --jq '.[0].number' 2>/dev/null || echo "")
+          fi
+
+          # Get PR title if we have a PR number
+          if [ -n "$PR_NUMBER" ]; then
+            PR_TITLE=$(gh pr view "$PR_NUMBER" --json title --jq '.title' 2>/dev/null || echo "")
+          else
+            # As a last resort, strip the " (#NNN)" suffix from the commit message
+            PR_TITLE=$(git log -1 --pretty=%B | sed -E 's/ *\(#[0-9]+\)//' | head -1)
+          fi
+
+          if [ -n "$PR_TITLE" ]; then
+            echo "Setting run name to: $PR_TITLE"
+            curl -s -X PATCH \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} \
+              -d "$(printf '{"name":"%s"}' "$PR_TITLE")"
+          else
+            echo "PR title not found; leaving run name as-is."
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
