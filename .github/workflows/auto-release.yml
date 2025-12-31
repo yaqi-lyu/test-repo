@@ -7,6 +7,7 @@ on:
       - main
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -50,9 +51,12 @@ jobs:
 
           if [ -n "$PR_TITLE" ]; then
             echo "Setting run name to: $PR_TITLE"
-            curl -s -X PATCH -H "Authorization: Bearer $GITHUB_TOKEN" -H "Accept: application/vnd.github+json" \
+            curl -s -X PATCH \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "Content-Type: application/json" \
               https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }} \
-              -d "{\"name\": \"$PR_TITLE\"}"
+              -d "$(printf '{"name":"%s"}' "$PR_TITLE")"
           else
             echo "PR title not found; leaving run name as-is."
           fi
