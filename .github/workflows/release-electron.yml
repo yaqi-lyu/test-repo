@@ -86,10 +86,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install UI dependencies
-        run: npm ci --prefer-offline
-        working-directory: src/ui
-
       - name: Update version for release
         shell: pwsh
         run: |
@@ -160,9 +156,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install UI dependencies
-        run: npm ci --prefer-offline
-        working-directory: src/ui
 
       - name: Update version for release
         run: |
