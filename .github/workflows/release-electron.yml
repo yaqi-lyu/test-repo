@@ -86,16 +86,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update version for release
-        shell: pwsh
-        run: |
-          $version = "${{ needs.check-release.outputs.version }}"
-          if (-not $version) {
-            throw "Missing version output"
-          }
-          npm version $version --no-git-tag-version
-          Write-Host "Updated package.json version to $version"
-
       - name: Publish Windows app
         run: npm run publish -- --win
         env:
@@ -156,16 +146,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-
-      - name: Update version for release
-        run: |
-          VERSION="${{ needs.check-release.outputs.version }}"
-          if [[ -z "$VERSION" ]]; then
-            echo "Missing version output"
-            exit 1
-          fi
-          npm version "$VERSION" --no-git-tag-version
-          echo "Updated package.json version to $VERSION"
 
       - name: Publish macOS app
         run: npm run publish -- --mac
