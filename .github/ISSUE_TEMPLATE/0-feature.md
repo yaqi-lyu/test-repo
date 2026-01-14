@@ -12,7 +12,9 @@ assignees: ''
 Cc:
 <!-- add intended user next to **Hi** -->
 Hi {{ USER }}
-  
+
+<!-- Display the video link here in the format of "▶️ Watch the video (xx min xx sec)"-->
+
 ### Pain
 Explain the pain you are experiencing.  This is **WHY** this must be done.
 
