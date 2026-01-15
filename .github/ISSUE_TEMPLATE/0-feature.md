@@ -14,7 +14,7 @@ Cc:
 Hi {{ USER }}
 
 <!-- VIDEO_LINK_START -->
-▶️ [Watch the video ({{xx min xx sec}})]({{videoUrl}})
+▶️ [Watch the video (xx min xx sec)]({{videoUrl}})
 <!-- VIDEO_LINK_END -->
 
 ### Pain
