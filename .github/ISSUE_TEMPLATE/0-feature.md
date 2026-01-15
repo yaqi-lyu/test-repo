@@ -14,7 +14,7 @@ Cc:
 Hi {{ USER }}
 
 <!-- VIDEO_LINK_START -->
-[▶️ Watch the video (xx min xx sec)]({{videoUrl}})
+[▶️ Watch the video ({{xx min xx sec}})]({{videoUrl}})
 <!-- RULES:
 - The duration MUST appear inside the link text.
 - If minutes is 0, omit "0 min" and show only seconds (e.g. "6 sec").
