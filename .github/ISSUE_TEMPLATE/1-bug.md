@@ -13,6 +13,7 @@ Cc:
 <!-- add intended user next to **Hi** -->
 Hi {{ USER }}
 
+<!-- duration in the format of xx min xx sec -->
 [▶️ Watch the video ({{duration)]({{VIDEO_LINK}})
 
 ### Describe the Bug
