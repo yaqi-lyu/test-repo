@@ -18,7 +18,7 @@ Hi {{ USER }}
 
 
 ### Pain
-Explain the pain you are experiencing.  This is **WHY** this must be done.
+<!--Explain the pain you are experiencing.  This is **WHY** this must be done.-->
 
 ### Suggested Solution
 <!-- Describe the solution you'd like -->
