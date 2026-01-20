@@ -13,7 +13,7 @@ Cc:
 <!-- add intended user next to **Hi** -->
 Hi {{ USER }}
 
-<!-- duration in the format of xx min xx sec -->
+<!-- duration in the format of xx min xx sec, if no min, omit the min section -->
 [▶️ Watch the video ({{duration}})]({{VIDEO_LINK}})
 
 
