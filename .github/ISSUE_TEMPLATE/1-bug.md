@@ -1,7 +1,7 @@
 ---
 name: "\U0001F41B Bug Report"
 about: Create a report to help us improve as per https://www.ssw.com.au/rules/the-right-way-to-report-bugs-and-give-feedback-suggestions
-title: "\U0001F41B "
+title: "🐛 {{bug description}} "
 labels: 'Type: Bug'
 assignees: ''
 
@@ -13,7 +13,7 @@ Cc:
 <!-- add intended user next to **Hi** -->
 Hi {{ USER }}
 
-<!-- duration in the format of xx min xx sec -->
+<!-- duration in the format of xx min xx sec, if no min, omit min section -->
 [▶️ Watch the video ({{duration}})]({{VIDEO_LINK}})
 
 ### Describe the Bug
